@@ -1,0 +1,77 @@
+
+
+body,html{font-size: 20px; font-family: "Rock Salt"; color:whitesmoke; background-color: black;}
+/*Gloria Hallelujah
+Reenie Beanie
+Rock Salt
+Covered By Your Grace
+*/
+
+h1 {font-size:40px; color:gold}
+h2 {font-size:20px; color: blueviolet}
+a {text-decoration:none;}
+p {font-family:fantasy;}
+a:link {
+  color:red;
+}
+a:visited {
+  color: red;
+}
+a:hover {
+  color: gold;
+}
+
+#Banner a{
+  margin-left:20px;
+}
+
+#Banner{
+  position: fixed;
+  top:0px;
+  width: 100%;
+  display:flex;
+  align-items: baseline;
+  background-color: black;
+  height: 120px;
+}
+.logo{
+  font-size:60px;
+}
+.navigation{
+  right: 10px;
+  bottom: 10px;
+  position:absolute;
+}
+
+#Content{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#Footer {
+  display:flex;
+  vertical-align: baseline;
+  bottom: 0px;
+  /*align-items: baseline;
+  position: absolute;
+  bottom: 0px;*/
+}
+.gap {
+  height:120px;
+  width: 100%;
+}
+.footContact{
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  right: 140px;
+  position:absolute;
+}
+.footSocial{
+  text-align: center;
+  right: 0px;
+  position:absolute;
+}
+.footInfo{
+  font-family:fantasy;
+}
