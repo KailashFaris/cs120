@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock The Aisle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="rta.css">
+  <style>
+    .rock-salt-regular {
+      font-family: "Rock Salt", cursive;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    input[type=text] {
+      width: 600px;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+    }
+
+    #Content{
+      width:900px;
+    }
+  </style>
+</head>
+<body>
+  <div id="Banner">
+    <div class="logo">
+      <h1>Rock The Aisle</h1>
+    </div>
+    <div class="navigation">
+      <a href="https://kailashfaris.github.io/cs120/proj1/main">Home</a>
+      <a href="https://kailashfaris.github.io/cs120/proj1/reviews">Reviews</a>
+      <a href="#">Booking</a>
+      <a href="https://kailashfaris.github.io/cs120/proj1/contact">Contact</a>
+    </div>
+  </div>
+
+  <div class="gap"></div>
+
+  <div id='Content'>
+    <p>
+    If you love what you've seen lets make it happen! Enter your information down below and we will reach out to rock out shortly!
+    <div class="ContactForm">
+      <p>Name: 
+        <form>
+          <input type="text">
+        </form>
+      </p>
+      
+      <br>
+      <p>Email: </p>
+      <form>
+        <input type="text">
+      </form>
+    </div>
+    <p>
+    If you want to see estimate costs, look below!
+    </p>
+    <div class="Calculation">
+      <p>
+      Number of People: 
+      <select id="peopleNumber">
+        <option value="1">Less than 100</option>
+        <option value="2">100 to 200</option>
+        <option value="3">More than 200!</option>
+      </select>
+      <br>
+      <label for="smoke"> I want a smoke machine: </label>
+      <input type="checkbox" id="smoke" value="Smoke">
+      <br>
+      <label for="lights"> I want the light show: </label>
+      <input type="checkbox" id="lights" value="Light">
+      <br>
+      <label for="fire"> I want pyrotechnics: </label>
+      <input type="checkbox" id="fire" value="Fire">
+      <br>
+      <button type="button">Calculate!</button>
+      <script>
+        function people(n){
+          if(n<100){
+            return 7000
+          }
+          else if(n<200){
+            return 10000
+          }
+          else{
+            return 15000
+          }
+        }
+        function addOns(smoke, lights, fire){
+          add = 0;
+          if (smoke==true){
+            add=add+3000;
+          }
+          if (lights==true){
+            add=add+3000;
+          }
+          if (fire==true){
+            add=add+10000;
+          }
+          return add
+        }
+        x=document.getElementById("peopleNumber").value;
+        if(x=="1"){
+          pNum=50;
+        }
+        if(x=="2"){
+          pNum=150;
+        }
+        if(x=="3"){
+          pNum=250;
+        }
+
+        window.onload = function() {
+          button = document.getElementById('button');
+          button.onclick = function() {
+            document.write("<br>We are estimating ");
+          }
+          
+          button.addEventListener(click, test());
+        }
+        function final(n, s, l, f){
+          fin = people(n);
+          fin = fin+addOns(s, l, f);
+          document.write(fin);
+          document.write (" dollars.");
+        }
+        final(pNum, true, false, true);
+      </script>
+      </p>
+    </div>
+  </p>
+  </div>
+
+  <hr>
+  <div id="Footer">
+    <div>
+      <h1>RTA</h1>
+    </div>
+    <div class="footContact">Contact
+      <hr>
+      <div class="footInfo">
+        rocktheaisle@hotmail.com <br>
+        666-933-3464
+      </div>
+    </div>
+    <div class="footSocial">
+      Social
+      <hr>
+      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+        <img src="images_RTA/insta.jpg" height='50px'/>
+      </a>
+      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+        <img src="images_RTA/facebook.jpg" height='50px'/>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
