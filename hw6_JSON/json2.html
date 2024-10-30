@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JSON_2</title>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script language="javascript">
+function song(name, artist, year, genre)
+	{
+		this.title=title;
+		this.artist=artist;
+		this.release_year=year;
+		this.genre=genre;
+		this.show = function(){
+      		return this.name+"<br>"+this.artist+"<br>"+this.year+"<br>"+this.genre;
+    	}
+	}
+</script>
+</head>
+
+<body>
+    <h1>Problem 2</h1>
+    <script language="javascript">
+      	$.get( "https://kailashfaris.github.io/cs120/hw6 (JSON)/songs.json", 
+			function( data ) {
+				str = JSON.stringify(data);
+				console.log('string data\n'+ str); //A way to put data into Console, check without printing
+        		str = "<br><br>"
+				//function acts on every item in obtained data
+				data.forEach(function(song) { 
+				  str += "<br><strong>" 
+					  + song.title + "</strong><br>"
+					  + song.artist + "<br>"
+					  + "Released " + song.release_year + "<br>"
+					  + "Genre: " + song.genre + "<br>";
+				  })
+        		document.getElementById('music-list').innerHTML = str;  	//prints data to div ID='music-list'
+	    })
+    </script>
+    
+	<div id="music-list">&nbsp;</div>
+</body>
+</html>
