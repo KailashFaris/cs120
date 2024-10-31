@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JSON_3</title>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script language="javascript">
+  function song(name, artist, year, genre){
+		this.title=title;
+		this.artist=artist;
+		this.release_year=year;
+		this.genre=genre;
+		this.show = function(){
+      return this.name+"<br>"+this.artist+"<br>"+this.year+"<br>"+this.genre;
+    }
+	}
+</script>
+</head>
+
+<body>
+    <h1>Problem 3</h1>
+    <form name="genres">
+      <select name="songList" id="songList">
+      </select>
+    </form>
+    <button name="btn" id="btn1" value="Filter">Show Genre</button>
+    <div id="write" style="border: 1px solid #000000; padding: 20px; width: 400px;">
+    </div>
+    <script>
+      //Defining songData and genreList
+      var songData = [];
+      var genreList = [];
+
+      //obtaining data and putting into songData array
+      $.get( "https://kailashfaris.github.io/cs120/hw6_JSON/songs.json", 
+			function( data ) {
+        data.forEach(function(song) { 
+          songData.push(song);
+				  })
+      genreList = findGenre(songData);
+      console.log(genreList);
+
+      //Takes the different genres and puts into the select
+      for (let i = 0; i<genreList.length; i++){
+        selector = document.getElementById("songList");
+        option = document.createElement("option");
+        option.text = genreList[i];
+        selector.add(option);
+      }
+
+      //Done when page is loaded, should happen after window load
+      $(document).ready(function(){
+        
+        //Defining button event handler to add songs based on genre
+        $('#btn1').click(add);
+      })
+			
+      //Defines a function to print songs out.
+      //Returns str to be written out to
+      function printSong(song) {
+			  str = "<br><strong>" 
+				  + song.title + "</strong><br>"
+				  + song.artist + "<br>"
+				  + "Released " + song.release_year + "<br>"
+          + "Genre: ";
+        if (Array.isArray(song.genre)){
+          for (let j = 0; j<song.genre.length-1; j++) {
+            str += song.genre[j]+", ";
+          }
+          str += song.genre[song.genre.length-1]+"";
+        }
+        else {
+          str += song.genre + "<br>";
+        }
+        return str;
+			};   
+
+      //Checks if a song has str as a genre
+      //Returns a boolean
+      function isGenre( songType , str){
+        g = songType.genre;
+        if (Array.isArray(g)){
+          for (let j = 0; j<g.length; j++) {
+            if(g[j]==str){
+              return true;
+            }
+          }
+        }
+        else {
+          if(g==str){
+            return true;
+          }
+        }
+        return false;
+      }
+
+      //Function to find all genres in songData to a given array
+      //Takes arr[songs], return returnArr[genre]
+      function findGenre( arr ){
+        returnArr = [];
+        for (let i = 0; i < arr.length; i++) {
+          currSong = arr[i];
+          g = currSong.genre;
+          if (Array.isArray(g)){
+            for (let j = 0; j<g.length; j++) {
+              if (!returnArr.includes(g[j])){
+                returnArr.push(g[j]);
+              }
+            }
+          }
+          else {
+            if (!returnArr.includes(g)){
+                returnArr.push(g);
+              }
+          }
+        }
+        return returnArr;
+      }
+
+      //Define add function
+      function add(){
+        //Beginning of string
+        message = "";
+
+        //Gets selected genre
+        index = document.getElementById("songList").selectedIndex;
+        selectedGenre = document.getElementById("songList").options[index].value;
+
+        for (let i = 0; i < songData.length; i++) {
+          if(isGenre(songData[i], selectedGenre)){
+            message += printSong(songData[i]);
+            message += "<br>";
+          }
+        }
+        $("#write").html(message);
+      }
+      
+    })
+    </script>
+</body>
+</html>
