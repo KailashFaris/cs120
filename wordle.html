@@ -29,6 +29,7 @@ function wordProp(characters,states)
     display:flex;
     align-items: baseline;
     padding-bottom: 5px;
+    justify-content: center;
   }
 
   .noplay, .wrong, .close, .right {
@@ -39,7 +40,6 @@ function wordProp(characters,states)
     padding: auto;
     font-size: 40px;
     text-align:center;
-    /* TODO: center vertically; */
   }
   .wrong {
     background-color: #dcdcdc;
@@ -59,47 +59,52 @@ function wordProp(characters,states)
 </head>
 
 <body>
+  <center>
     <h1>Lets Play Wordle!</h1>
     <div id="playingBoard">
     </div>
     <form>
       <label for="name">Guess:</label><br>
       <input type="text" id="name"><br>
-      <input type="button" name="btn" id="btn1" value="Guess">
+      <input type="button" name="btn1" id="btn1" value="Guess">
     </form>
     <script>
-      var wordleWord = "HELLO";
+      //Sets up the boards and defines gloabl variable
+      var wordleWord = "";
       var guessNumber = 0;
       makeBoard();
 
+      //Gets API of randomwords of length 5
       $.get( "https://random-word-api.herokuapp.com/word?length=5", 
 			function( data ) {
         wordleWord = data[0];
         wordleWord = wordleWord.toUpperCase();
-        console.log(wordleWord);
+        console.log(wordleWord);      //wordleWord printed to console for testing
       })
 
       window.onload=function(){
         // makeBoard() //Generates the playing board
         //Eventlistener for button click
         $('#btn1').click( function(){
-          goodGuess = guess();
+          goodGuess = guess();  //Checks that guess is exactly 5 letters
           if (goodGuess){
             wordGuess=$('#name').val();
             wordGuess = wordGuess.toUpperCase();
-            wordState = findState(wordGuess);
-            console.log(wordState);
-            fillRow(wordState);
+            wordState = findState(wordGuess);   //Checks that every character is either "right", "wrong", or "close"
+            console.log(wordState);             //Prints results to console for testing
+            fillRow(wordState);                 //Changes the board with colors
             if(wordGuess==wordleWord){
               alert("Congratulations on winning!!!!!");
               if(guessNumber==0){
-                winMessage = "Wow! You won on the first guess!!!!";
+                winMessage = "Wow! You won on the first guess!!!!<br>";
+                winMessage += "Here's your <a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' target='_blank'>prize!</a>"
               }
               else{
                 winMessage ="You correctly guessed "+wordleWord.toLowerCase()+" in "+(guessNumber+1)+" guesses!";
               }
+              $('#btn1').remove();
               $('#extra').html(winMessage);
-              $('.name').html('');  //TODO: Try to clear textbox
+              $('#extra').append("<br><input type='button' name='btn2' id='btn2' value='Replay?' onclick='location.reload()'>");
             }
             else {
               guessNumber++;
@@ -108,19 +113,20 @@ function wordProp(characters,states)
                 $('#extra').html("The correct word was "+wordleWord.toLowerCase());
               }
             }
+            $('.name').html('');  //TODO: Clear textbox when the guess was a valid length
           }
         });
       }
       
-
       //Returns how many times the char/str appears in arr
       function countCharArr(char, arr){
         count = 0;
-        for(let i = 0; i<arr.length; i++){
-          if(arr[i]==char){
+        //forEach used here
+        arr.forEach(element => {
+          if (element==char){
             count++;
           }
-        }
+        });
         return count;
       }
 
@@ -140,7 +146,6 @@ function wordProp(characters,states)
       //Takes your guess word
       //Returns a wordProp(characters,states)
       //Basically an array of the characters and if they are correct or not
-      //TODO: Fix the 'close' states need -#close and #right
       function findState( wrd ) {
         wordleArray = wordleWord.split('');
         charArray = wrd.split('');
@@ -184,7 +189,6 @@ function wordProp(characters,states)
         charArray = str.characters;
         stateArray = str.states;
         for (let i = 0; i<5; i++){
-          // char = str.substring(i,i+1);
           char = charArray[i];
           idName = "_row"+guessNumber+"_let"+i;
           $('#'+idName).html(char);
@@ -195,7 +199,7 @@ function wordProp(characters,states)
       //Arrow funtion to return string length
       stringLength = (str) => str.length;
 
-      //define guess function
+      //Define guess function
       //Confirms that your guess is exactly 5 characters
       function guess() {
         val=document.getElementById("name").value;
@@ -205,7 +209,6 @@ function wordProp(characters,states)
           alString = "";
         }
         else {
-          //add val if possible
           alString = "Your guess needs to have 5 characters. Yours has "+valSize+".";
           valid = false;
           alert(alString);
@@ -213,7 +216,6 @@ function wordProp(characters,states)
         return valid;
       }
       
-
       //Creates the initial 6x5 board.
       //Breaks it up into 6 rows with 5 characters each
       function makeBoard(){
@@ -232,5 +234,7 @@ function wordProp(characters,states)
     </script>
     
     <div id="extra"></div>
+    
+  </center>
 </body>
 </html>
