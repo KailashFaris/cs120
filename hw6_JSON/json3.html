@@ -28,28 +28,19 @@
     <div id="write" style="border: 1px solid #000000; padding: 20px; width: 400px;">
     </div>
     <script>
-      //Defining songData
+      //Defining songData and genreList
       var songData = [];
-      var genreTest = [];
+      var genreList = [];
 
       //obtaining data and putting into songData array
-      function obtainSongs(){
       $.get( "https://kailashfaris.github.io/cs120/hw6_JSON/songs.json", 
 			function( data ) {
         data.forEach(function(song) { 
           songData.push(song);
-          console.log("for loop"+songData.length); //Proof it is creating songlist
 				  })
-      })
-      //Confirming songlist was created
-      //It says songData has length 0
-      console.log("about to attempt finding genres: "+songData.length);
-      genreTest = findGenre(songData);
-    }
+      genreList = findGenre(songData);
+      console.log(genreList);
 
-      //Defines genre list
-      //TODO: Hardcoded, needs to be fixed
-      var genreList = ["Rock", "R&B", "Funk", "Folk", "Country", "Pop", "Metal"];
       //Takes the different genres and puts into the select
       for (let i = 0; i<genreList.length; i++){
         selector = document.getElementById("songList");
@@ -57,22 +48,9 @@
         option.text = genreList[i];
         selector.add(option);
       }
-      
-      //Should happen first
-      $(window).on("load",function(){
-        //Creates the songlist, saved to songData
-        obtainSongs();
-        console.log(songData);
-        console.log(songData[0]);
-        console.log(genreTest);
-      })
 
       //Done when page is loaded, should happen after window load
-      //Apparently incorrect
       $(document).ready(function(){
-        // obtainSongs();
-        console.log(songData);
-        console.log(songData[0]);
         
         //Defining button event handler to add songs based on genre
         $('#btn1').click(add);
@@ -119,9 +97,7 @@
 
       //Function to find all genres in songData to a given array
       //Takes arr[songs], return returnArr[genre]
-      //UNTESTED
       function findGenre( arr ){
-        console.log("starting to add genres to genrelist: "+arr.length);
         returnArr = [];
         for (let i = 0; i < arr.length; i++) {
           currSong = arr[i];
@@ -144,7 +120,7 @@
 
       //Define add function
       function add(){
-        //Beginning of Songs
+        //Beginning of string
         message = "";
 
         //Gets selected genre
@@ -159,6 +135,8 @@
         }
         $("#write").html(message);
       }
+      
+    })
     </script>
 </body>
 </html>
