@@ -100,7 +100,7 @@ function wordProp(characters,states)
                 winMessage += "Here's your <a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' target='_blank'>prize!</a>"
               }
               else{
-                winMessage ="You correctly guessed "+wordleWord.toLowerCase()+" in "+(guessNumber+1)+" guesses!";
+                winMessage ="You correctly guessed "+wordleWord+" in "+(guessNumber+1)+" guesses!";
               }
               $('#btn1').remove();
               $('#extra').html(winMessage);
@@ -110,7 +110,9 @@ function wordProp(characters,states)
               guessNumber++;
               if(guessNumber>=6){
                 alert("game over");
-                $('#extra').html("The correct word was "+wordleWord.toLowerCase());
+                $('#extra').html("The correct word was "+wordleWord);
+                $('#btn1').remove();
+                $('#extra').append("<br><input type='button' name='btn2' id='btn2' value='Replay?' onclick='location.reload()'>");
               }
             }
             $('.name').html('');  //TODO: Clear textbox when the guess was a valid length
