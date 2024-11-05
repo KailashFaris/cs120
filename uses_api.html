@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <style type="text/css">
+    /* body,html{font-size: 20px; font-family:"sans-serif";}
+    h1 {font-size: 35px;} */
+  
+    h2 {font-size: 20px;}
+  </style>
+<head>
+	<title>API</title>
+	<meta charset="utf-8"/>
+	<script>
+		function loadData() {
+			
+			request = new XMLHttpRequest();
+
+ 			// theWord = document.forms[0].word.value;
+			request.open("GET", "https://api.gameofthronesquotes.xyz/v1/random", true);
+
+			request.onreadystatechange = function() {
+ 
+				if (request.readyState == 4 && 
+					request.status == 200) 
+				{
+					theData = request.responseText;
+          data = JSON.parse(theData);
+          if(data.character.house.name!=null){
+            title = "<h2>"+data.character.name + " of " + data.character.house.name + "</h2>";
+          }
+          else{
+            title = "<h2>"+data.character.name+ "</h2>";
+          }
+          // quote = data.character;
+					// document.getElementById("main").innerHTML = "<br>The response is: " + theData;
+          quote = "\"" + data.sentence+"\"";
+          
+          document.getElementById("main").innerHTML = "<br>" + title;
+					document.getElementById("main").innerHTML +=  quote + "<br>";		
+				}
+				else if (request.readyState == 4 && request.status != 200) 
+				{
+				   document.getElementById("main").innerHTML += "<br>Request failed!";
+				}
+			}
+			request.send();
+		}  // end load data
+	</script>
+</head>
+<body>
+
+	<h1>Game of Thrones Quotes</h1>
+	<input type = "button" name = "quote" value = "Get A Quote" onclick="loadData()">
+	<div id="main">&nbsp;</div>
+</body>
+</html>
